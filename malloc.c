@@ -85,6 +85,19 @@ void* malloc(size_t size)
 	return (void*)((char*)b+BLOCK_SIZE);
 }
 
+void* calloc(size_t num, size_t size)
+{
+	void *p = malloc(num*size);
+	if(!p)
+		return NULL;
+	size_t i,s4,*sp;
+	s4=align4(num*size)/(sizeof(size_t));
+	sp=(size_t*)(p);
+	for(i=0;i<s4;i++)
+		sp[i]=0;
+	return p;
+}
+
 t_block valid_addr(void *p, t_block *last)
 {
 	if(base){
